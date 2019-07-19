@@ -3,7 +3,6 @@ package com.miso.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Set;
 
 import com.miso.entity.Player;
 import com.miso.enums.Category;
@@ -12,30 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class PlayerDAOImpl implements PlayerDAO {
+public class PlayerDAOImpl implements PlayerDAOCustom {
 
     @PersistenceContext
     EntityManager em;
-
-    @Override
-    public void create(Player player) {
-        em.persist(player);
-    }
-
-    @Override
-    public void update(Player player) {
-        em.merge(player);
-    }
-
-    @Override
-    public void delete(Player player) throws IllegalArgumentException {
-        em.remove(player);
-    }
-
-    @Override
-    public Player findById(Long id) {
-        return em.find(Player.class, id);
-    }
 
     @Override
     public List<Player> findBySurname(String surname) {

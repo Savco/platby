@@ -4,11 +4,12 @@ import com.miso.enums.Category;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name="Players")
-public class Player {
+public class Player implements Serializable {
 
     @Id
     @Column(name = "player_id")
@@ -26,10 +27,9 @@ public class Player {
     @Enumerated
     private Category category;
 
-//    @NotNull
-//    @ManyToOne
-//    @JoinColumn(name="account_id")
-//    private BankAccount account;
+    @NotNull
+    @OneToOne
+    private Plan plan;
 
     public Player(String surname, String name, Double debt, Category category) {
         this.surname = surname;
@@ -58,6 +58,8 @@ public class Player {
 
     public Category getCategory() { return category;}
 
+    public Plan getPlan() {return  plan;}
+
     public void setPlayerId(Long playerId) {
         this.playerId = playerId;
     }
@@ -73,6 +75,8 @@ public class Player {
     public void setDebt(Double debt) {this.debt = debt;}
 
     public void setCategory(Category category) { this.category = category;}
+
+    public void setPlan(Plan plan) { this.plan = plan;}
 
     @Override
     public String toString() {

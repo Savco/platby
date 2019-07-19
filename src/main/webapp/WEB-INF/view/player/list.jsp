@@ -8,12 +8,13 @@
         rel="stylesheet">
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="/player/list/U19">U19</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/player/list/U17">U17</a>
-        </li>
+        <c:forEach items="${categories}" var="category">
+           <li class="nav-item">
+              <a class="nav-link" href="/player/list/${category}">
+                <c:out value="${category}"/>
+              </a>
+           </li>
+       </c:forEach>
       </ul>
     </nav>
 </head>

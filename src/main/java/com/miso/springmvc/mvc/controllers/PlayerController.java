@@ -26,6 +26,7 @@ public class PlayerController {
     @RequestMapping(value = "/list/{category}", method = RequestMethod.GET)
     public String listPlayers(Model model, @PathVariable String category) {
         model.addAttribute("players", playerFacade.getPlayersByCategory(Category.valueOf(category)));
+        model.addAttribute("categories", Category.values());
         System.out.println(playerFacade.getAllPlayers());
         return "player/list";
     }

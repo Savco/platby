@@ -1,6 +1,7 @@
 package com.miso.enums;
 
 public enum Category {
+    U6,
     U7,
     U8,
     U9,

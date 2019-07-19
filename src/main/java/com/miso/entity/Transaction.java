@@ -1,64 +1,72 @@
 package com.miso.entity;
 
+import com.miso.enums.TransactionState;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="Transactions")
-public class Transaction {
+public class Transaction implements Serializable {
 
     @Id
     @Column(name = "transaction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
-//    @ManyToOne
-//    @JoinColumn(name="account_id")
-//    private BankAccount account;
+    private Double amountToPay;
 
-    private Double amount;
+    private Double paid;
 
-    private Date date;
+    @Enumerated
+    private TransactionState status;
+
+    @ElementCollection
+    private Set<Date> dates;
 
     public Transaction() {}
 
-    public Transaction(Double amount, Date date) {
- //       this.account = account;
-        this.amount = amount;
-        this.date = date;
+    public Transaction(Double amountToPay) {
+        this.amountToPay = amountToPay;
+        this.paid = 0.0d;
+        this.status = TransactionState.INACTIVE;
+        this.dates = new HashSet<>();
     }
 
-    public Long getTransactionId() {
-        return transactionId;
+    public Double getAmountToPay() {
+        return amountToPay;
     }
 
-//    public BankAccount getBankAccount() {
-//        return account;
-//    }
-
-    public Double getAmount() {
-        return amount;
+    public void setAmountToPay(Double amountToPay) {
+        this.amountToPay = amountToPay;
     }
 
-    public Date getDate() {
-        return date;
+    public Double getPaid() {
+        return paid;
     }
 
-    public void setTransactionId(Long transactionId) {
-        this.transactionId = transactionId;
+    public void setPaid(Double paid) {
+        this.paid = paid;
     }
 
-//    public void setBankAccout(BankAccount accout) {
-//        this.account = account;
-//    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public TransactionState getStatus() {
+        return status;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStatus(TransactionState status) {
+        this.status = status;
+    }
+
+    public Set<Date> getDates() {
+        return dates;
+    }
+
+    public void setDates(Set<Date> dates) {
+        this.dates = dates;
     }
 
     @Override
@@ -67,13 +75,26 @@ public class Transaction {
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
         return Objects.equals(transactionId, that.transactionId) &&
-                Objects.equals(amount, that.amount) &&
-                Objects.equals(date, that.date);
+                Objects.equals(amountToPay, that.amountToPay) &&
+                Objects.equals(paid, that.paid) &&
+                status == that.status &&
+                Objects.equals(dates, that.dates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, amount, date);
+        return Objects.hash(transactionId, amountToPay, paid, status, dates);
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId +
+                ", amountToPay=" + amountToPay +
+                ", paid=" + paid +
+                ", status=" + status +
+                ", dates=" + dates +
+                '}';
     }
 }
 
